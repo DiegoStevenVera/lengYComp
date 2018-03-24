@@ -67,7 +67,22 @@ public class Scanner {
                     pila.push(String.valueOf(p[i]));
                     kCaracter = false;
                     aux = "";
-                }  
+                }
+                
+                switch(aux) {
+                    case "++":
+                    case "--":
+                    case "+=":
+                    case "-=":
+                    case "int":
+                    case "char":
+                    case "string":
+                    case "float":
+                    case "boolean": pila.push(aux);
+                                    kCaracter = false; 
+                                    kLetra = false;
+                                    aux = "";
+                }
             }
             
             i++;
@@ -77,6 +92,6 @@ public class Scanner {
     }
     
     public static void main(String[] args) {
-        System.out.println(scan("if (x >= 3 || x == 2) { hazte esta };"));
+        System.out.println(scan("int x = 2++;"));
     }
 }
