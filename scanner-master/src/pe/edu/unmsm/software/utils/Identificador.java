@@ -15,6 +15,8 @@ public class Identificador implements Comparable<Identificador>{
     private String id;
     private String nombre;
     private String tipo;
+    
+    public final static Comparador COMPARADOR_TIPO = new Comparador();
 
     public Identificador(String id, String nombre, String tipo) {
         this.id = id;
@@ -25,6 +27,11 @@ public class Identificador implements Comparable<Identificador>{
     public Identificador(String id, String nombre) {
         this.id = id;
         this.nombre = nombre;
+        this.tipo = "";
+    }
+    
+    public Identificador(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getTipo() {
@@ -60,5 +67,18 @@ public class Identificador implements Comparable<Identificador>{
         } else {
             return 0;
         }
+    }
+    
+    private static class Comparador implements Comparator<Identificador> {
+
+        @Override
+        public int compare(Identificador o1, Identificador o2) {
+            return o1.compareTo(o2);
+        }
+    }
+    
+    @Override
+    public String toString() {
+        return id;
     }
 }
