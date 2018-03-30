@@ -4,9 +4,7 @@
  * and open the template in the editor.
  */
 package pe.edu.unmsm.software.views;
-import java.util.Comparator;
 import java.util.Iterator;
-import pe.edu.unmsm.software.scanner.Scanner;
 import pe.edu.unmsm.software.utils.ControlarArchivo;
 import pe.edu.unmsm.software.utils.Identificador;
 import pe.edu.unmsm.software.utils.Lista;
@@ -20,19 +18,30 @@ public class Prueba {
     /**
      * @param args the command line arguments
      */
+    public static int contadorTipo(String tipo, Lista<Identificador> list) {
+        Iterator<Identificador> it = list.iterator();
+        Identificador o = new Identificador(tipo);
+        int cant = 0;
+        
+        while (it.hasNext()) {
+            if (it.next().compareTo(o) == 0) {
+                cant++;
+            }
+        }
+        return cant;
+    }
     
     public static void main(String[] args) {
-        String cadenarepuesto = "";
         String token = "";
         String tipo = "";
         String id = "";
+        boolean encontrado = false;
+        
         Lista<Identificador> list = new Lista<>();
         Lista<String> archivo;
         ControlarArchivo ca = new ControlarArchivo();
         Iterator<String> it;
         
-        int nInt = 0, nString = 0, nChar = 0, nFloat = 0, nDouble = 0;
-        int n = 0;
         
         ca.leerArchivo();
         archivo = ca.getLista();
@@ -42,26 +51,26 @@ public class Prueba {
             token = it.next();
             
             switch (token) {
-                case "int":     id = "I"; nInt++; 
-                                n = nInt; break;
-                case "String":  id = "S"; nString++; 
-                                n = nString; break;
-                case "char":    id = "C"; nChar++; 
-                                n = nChar; break;
-                case "float":   id = "F"; nFloat++; 
-                                n = nFloat; break;
-                case "double":  id = "D"; nDouble++; 
-                                n = nDouble; break;
+                case "int":     id = "I"; encontrado = true;
+                                break;
+                case "String":  id = "S";  encontrado = true; 
+                                break;
+                case "char":    id = "C";  encontrado = true; 
+                                break;
+                case "float":   id = "F";  encontrado = true;
+                                break;
+                case "double":  id = "D";  encontrado = true;
+                                break;
             }
             
             list.agregar(new Identificador(token,token)); // warda el token sea cual sea
             
-            if (n != 0) { // encontro una variable
+            if (encontrado) { // encontro una variable
                 tipo = token;
                 token = it.next();
-                id += String.format("%3s", n).replace(" ", "0");
+                id += String.format("%3s", contadorTipo(tipo, list)).replace(" ", "0");
                 list.agregar(new Identificador(id,token,tipo));
-                n = 0;
+                encontrado = false;
             }
 
         }
