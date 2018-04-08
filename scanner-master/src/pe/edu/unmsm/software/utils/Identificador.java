@@ -17,17 +17,12 @@ public class Identificador implements Comparable<Identificador>{
     private String tipo;
     
     public final static Comparador COMPARADOR_TIPO = new Comparador();
-
+    public final static ComparadorNombre COMPARADOR_NOMBRE = new ComparadorNombre();
+    
     public Identificador(String id, String nombre, String tipo) {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;
-    }
-    
-    public Identificador(String id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
-        this.tipo = "";
     }
     
     public Identificador(String tipo) {
@@ -69,12 +64,22 @@ public class Identificador implements Comparable<Identificador>{
         }
     }
     
-    private static class Comparador implements Comparator<Identificador> {
+    public static class Comparador implements Comparator<Identificador> {
 
         @Override
         public int compare(Identificador o1, Identificador o2) {
             return o1.compareTo(o2);
         }
+    }
+    
+    public static class ComparadorNombre implements Comparator<String>{
+
+        @Override
+        public int compare(String o1, String o2) {
+            return o1.compareTo(o2);
+        }
+        
+        
     }
     
     @Override

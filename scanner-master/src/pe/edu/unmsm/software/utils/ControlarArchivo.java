@@ -22,8 +22,8 @@ public class ControlarArchivo {
         lista = new Lista<>();
     }
         
-    public void leerArchivo(){        
-        URI uri = Paths.get("lectura.txt").toUri();
+    public void leerArchivo(String nombre){        
+        URI uri = Paths.get(nombre).toUri();
         File file = new File(uri);
         
         try {

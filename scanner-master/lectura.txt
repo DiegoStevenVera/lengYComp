@@ -1,12 +1,7 @@
 public class Identificador implements Comparable<Identificador>{
     // holi
-    private String id;
-    private String nombre;
-    private String tipo;
+    private String id = 10;
+    private String nombre = 8;
+    private String tipo = 9;
 
-    public Identificador(String id, String nombre, String tipo) {
-        this.id = id;
-        this.nombre = nombre;
-        this.tipo = tipo;
-    }
 }
