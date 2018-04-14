@@ -1,0 +1,20 @@
+int i = 0;
+/*
+hola a todos
+*/
+int s = 2;
+s++;
+
+char g = 's';
+
+String prueba = "probando";
+// como esta?
+
+/**
+espero que bien
+**/
+
+i++;
+
+/*cuidese*/
+/*adios*/

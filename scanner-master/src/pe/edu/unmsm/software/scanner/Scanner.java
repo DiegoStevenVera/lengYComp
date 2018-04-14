@@ -5,6 +5,8 @@
  */
 package pe.edu.unmsm.software.scanner;
 
+import java.io.InputStream;
+
 /**
  *
  * @author bluq1
@@ -13,10 +15,15 @@ public class Scanner {
     
     private String cadenaFuente;
     private int posicion;
+    private static boolean comentarioAbierto;
 
     public Scanner() {
-        this.cadenaFuente = "";
+        this.cadenaFuente = "";            
         this.posicion = 0;
+    }
+
+    public Scanner(InputStream in) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public String analizar(){
@@ -25,12 +32,25 @@ public class Scanner {
             
             String cadenaResultante = "";
             
-            while(cadenaFuente.substring(posicion ,posicion + 1).equals(" ")){
+            if(cadenaFuente.charAt(cadenaFuente.length()-2) == '*' && cadenaFuente.charAt(cadenaFuente.length()-1)=='/'){  
+                posicion = cadenaFuente.length();
+                comentarioAbierto = false;
+                cadenaResultante = "FIN";
+                return cadenaResultante;
+            }        
+            
+            if(comentarioAbierto){  
+                posicion = cadenaFuente.length();
+                cadenaResultante = "FIN";
+                return cadenaResultante;
+            }            
+            
+            while(!comentarioAbierto && cadenaFuente.substring(posicion ,posicion + 1).equals(" ")){
                 posicion++;
             }        
-
+            
             char caracter = cadenaFuente.charAt(posicion);
-
+                        
             if((caracter >= 'A' && caracter <= 'Z') || (caracter >= 'a' && caracter <= 'z')){
                 while ((caracter >= 'A' && caracter <= 'Z') || 
                        (caracter >= 'a' && caracter <= 'z') || 
@@ -50,7 +70,17 @@ public class Scanner {
             } else if (caracter == '/' && cadenaFuente.charAt(posicion + 1)=='/'){
                 posicion = cadenaFuente.length();
                 cadenaResultante = "FIN";
-            } else if (caracter==',' || caracter=='(' || caracter==')' || caracter=='=' || 
+            } 
+            else if(caracter == '/' && cadenaFuente.charAt(posicion + 1)=='*'){
+                posicion = cadenaFuente.length();
+                if(cadenaFuente.charAt(cadenaFuente.length()-2) == '*' && cadenaFuente.charAt(cadenaFuente.length()-1)=='/'){                
+                    this.comentarioAbierto = false;
+                } else {
+                    this.comentarioAbierto = true;
+                }
+                cadenaResultante = "FIN";
+            }     
+            else if (caracter==',' || caracter=='(' || caracter==')' || caracter=='=' || 
                        caracter=='*' || caracter=='/' || caracter=='-' || caracter=='+' || 
                        caracter=='<' || caracter=='>' || caracter==';' || caracter=='[' || 
                        caracter==']' || caracter=='{' || caracter=='}' || caracter=='.' ||

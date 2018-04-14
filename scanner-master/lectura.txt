@@ -1,7 +1,0 @@
-public class Identificador implements Comparable<Identificador>{
-    // holi
-    private String id = 10;
-    private String nombre = 8;
-    private String tipo = 9;
-
-}
